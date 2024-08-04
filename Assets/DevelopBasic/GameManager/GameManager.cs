@@ -21,6 +21,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private bool isTesting = true;
     [SerializeField] private Text demoText;
 [Header("Debug")]
+    [SerializeField] private bool HideCursor = true;
     [SerializeField] private InputActionMap debugActions;
     private static bool isSwitchingScene = false;
     private static bool isPaused = false;
@@ -30,6 +31,10 @@ public class GameManager : Singleton<GameManager>
 
         SaveManager.Initialize();
 
+        if(HideCursor) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     #if UNITY_EDITOR
         if(loadInitSceneFromGameManager) StartCoroutine(SwitchSceneCoroutine(string.Empty, InitScene, false));
     #else
