@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b035faf50d0c4547ab64d28c6066350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFrameRate: 60
+  targetFrameRate: 90
   BlackScreenCanvasGroup: {fileID: 4562222128510109114}
   transitionDuration: 0.5
   loadInitSceneFromGameManager: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   isDemo: 1
   isTesting: 1
   demoText: {fileID: 6073298263620526879}
+  HideCursor: 1
   debugActions:
     m_Name: Debug Actions
     m_Id: ba3d51f1-048f-4d77-8a8d-e1782e6bd764
