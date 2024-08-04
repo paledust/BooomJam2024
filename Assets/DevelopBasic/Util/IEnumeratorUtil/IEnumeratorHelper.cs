@@ -69,6 +69,9 @@ public static class CommonCoroutine{
         yield return new WaitForSeconds(delay);
         GameObject.Destroy(gameObject);
     }
+    public static IEnumerator coroutineLoop(float duration, Action<float> action){
+        yield return new WaitForLoop(duration, (t)=>action(t));
+    }
 }
 
 public class CoroutineExcuter
