@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class Service{
+    public static LayerMask interactableLayerMask = 1<<LayerMask.NameToLayer("Interactable");
+    public static int interactableLayer = LayerMask.NameToLayer("Interactable");
+    public static int ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
 #region HelperFunction
     /// <summary>
     /// Return a list of all active and inactive objects of T type in loaded scenes.
