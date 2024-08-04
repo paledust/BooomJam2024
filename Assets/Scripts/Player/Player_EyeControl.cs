@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerEyeControl : MonoBehaviour{
 [Header("Eye Transform")]
@@ -13,6 +14,9 @@ public class PlayerEyeControl : MonoBehaviour{
     [SerializeField] private float eyeCloseTime = 2;
     [SerializeField] private float eyeBlinkDarkTime = 0.1f;
     [SerializeField] private float eyeReopenTime = 2;
+
+[Header("VFX")]
+    [SerializeField] private Volume blinkPP;
 
     private float eyeAngleDelta = 0;
     private CoroutineExcuter eyeBlinker;
@@ -28,6 +32,7 @@ public class PlayerEyeControl : MonoBehaviour{
             float eyeAngle = Mathf.Lerp(minEyeAngle, maxEyeAngle, (1-eyeAngleDelta));
             upperEye.transform.localRotation = Quaternion.Euler(-eyeAngle,0,0);
             lowerEye.transform.localRotation = Quaternion.Euler(eyeAngle,0,0);
+            blinkPP.weight = EasingFunc.Easing.QuadEaseOut(eyeAngleDelta);
         });
 
         yield return new WaitForSeconds(eyeBlinkDarkTime);
@@ -37,6 +42,7 @@ public class PlayerEyeControl : MonoBehaviour{
             float eyeAngle = Mathf.Lerp(minEyeAngle, maxEyeAngle, (1-eyeAngleDelta));
             upperEye.transform.localRotation = Quaternion.Euler(-eyeAngle,0,0);
             lowerEye.transform.localRotation = Quaternion.Euler(eyeAngle,0,0);
+            blinkPP.weight = EasingFunc.Easing.SmoothInOut(eyeAngleDelta);
         });
     }
 }
