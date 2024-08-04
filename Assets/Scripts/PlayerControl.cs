@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour
     }
     void Update(){
         m_mouseLook.UpdateLookRotation();
-        Ray ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = mainCam.ViewportPointToRay(Vector2.one*0.5f);
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Service.interactableLayerMask)){
             Basic_Clickable hit_Interactable = hit.collider.GetComponent<Basic_Clickable>();
             hoverPos = hit.point;
@@ -52,7 +52,6 @@ public class PlayerControl : MonoBehaviour
     void OnClick(InputValue value){
     //Pressing Behavior
         if(value.isPressed){
-            EventHandler.Call_UI_OnCursorClick(Mouse.current.position.ReadValue());
             if(m_holdingInteractable != null) return;
             if(m_hoveringInteractable == null) return;
         //Interact with object

@@ -77,7 +77,6 @@ public class MouseLook{
         if(clampVerticalRotation) m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
     }
     public void UpdateLookRotation(){
-        Debug.Log(m_CameraTargetRot.eulerAngles);
         if(smooth){
             characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, initRot * m_CharacterTargetRot,
                 smoothSpeed * Time.deltaTime);
