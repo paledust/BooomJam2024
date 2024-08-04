@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private MouseLook m_mouseLook;
+    [SerializeField] private PlayerEyeControl eyeControl;
 #region PP
     [SerializeField] private float focusTime = 0.2f;
     [SerializeField] private Volume focusVolume; 
@@ -59,6 +60,7 @@ public class PlayerControl : MonoBehaviour
     void OnClick(InputValue value){
     //Pressing Behavior
         if(value.isPressed){
+            eyeControl.BlinkEye();
             if(m_holdingInteractable != null) return;
             if(m_hoveringInteractable == null) return;
         //Interact with object
