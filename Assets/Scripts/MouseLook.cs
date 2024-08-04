@@ -14,6 +14,7 @@ public class MouseLook{
     [SerializeField] private MouseLookData mouseLookData;
     [SerializeField] private Transform characterTrans;
     [SerializeField] private Transform camTrans;
+    [SerializeField] private bool applyInitOffset;
     public float Sensitivity = 0.15f;
     public bool clampVerticalRotation = true;
     public float MinimumX = -90F;
@@ -23,12 +24,14 @@ public class MouseLook{
     public float MaximumY = 70f;
     public bool smooth;
     public float smoothSpeed = 5f;
+    private Quaternion initRot;
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
 
     public void Init(){
-        m_CharacterTargetRot = characterTrans.localRotation;
+        m_CharacterTargetRot = applyInitOffset?Quaternion.identity:characterTrans.localRotation;
         m_CameraTargetRot = camTrans.localRotation;
+        initRot = characterTrans.localRotation;
     }
     public void SetHorizontalLimit(Vector2 limit){
         MinimumY = limit.x;
@@ -76,13 +79,13 @@ public class MouseLook{
     public void UpdateLookRotation(){
         Debug.Log(m_CameraTargetRot.eulerAngles);
         if(smooth){
-            characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, m_CharacterTargetRot,
+            characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, initRot * m_CharacterTargetRot,
                 smoothSpeed * Time.deltaTime);
             camTrans.localRotation = Quaternion.Slerp (camTrans.localRotation, m_CameraTargetRot,
                 smoothSpeed * Time.deltaTime);
         }
         else{
-            characterTrans.localRotation = m_CharacterTargetRot;
+            characterTrans.localRotation = initRot * m_CharacterTargetRot;
             camTrans.localRotation = m_CameraTargetRot;
         }
     }
