@@ -80,18 +80,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mouseLook:
+    defaultMouseLookData:
+      Sensitivity: 0.1
+      MinimumX: -70
+      MaximumX: 60
+      MinimumY: -55
+      MaximumY: 55
+      smoothSpeed: 10
     characterTrans: {fileID: 6531604935923600548}
     camTrans: {fileID: 1416697552086822808}
     applyInitOffset: 1
-    Sensitivity: 0.1
     clampVerticalRotation: 1
+    clampHorizontalRotation: 1
+    useSmooth: 1
+    Sensitivity: 0.1
     MinimumX: -70
     MaximumX: 60
-    clampHorizontalRotation: 1
     MinimumY: -55
     MaximumY: 55
-    smooth: 1
-    smoothSpeed: 20
+    smoothSpeed: 10
   eyeControl: {fileID: 1078365928672484877}
   focusTime: 0.4
   focusVolume: {fileID: 624420448837105177}
@@ -241,7 +248,7 @@ GameObject:
   - component: {fileID: 1416697552086822808}
   - component: {fileID: 1052448678234759352}
   m_Layer: 0
-  m_Name: PlayerCam
+  m_Name: OverviewCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +263,7 @@ Transform:
   m_GameObject: {fileID: 2492977017175423237}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

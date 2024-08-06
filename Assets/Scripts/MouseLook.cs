@@ -1,4 +1,6 @@
 using UnityEngine;
+
+[System.Serializable]
 public class MouseLookData
 {
     public float Sensitivity = .15f;
@@ -6,23 +8,22 @@ public class MouseLookData
     public float MaximumX = 90f;
     public float MinimumY = -90f;
     public float MaximumY = 90f;
-    public bool smooth;
     public float smoothSpeed = 20f;
 }
 [System.Serializable]
 public class MouseLook{
-    [SerializeField] private MouseLookData mouseLookData;
+    [SerializeField] private MouseLookData defaultMouseLookData;
     [SerializeField] private Transform characterTrans;
     [SerializeField] private Transform camTrans;
     [SerializeField] private bool applyInitOffset;
-    public float Sensitivity = 0.15f;
     public bool clampVerticalRotation = true;
+    public bool clampHorizontalRotation = false;
+    public bool useSmooth;
+    public float Sensitivity = 0.15f;
     public float MinimumX = -90F;
     public float MaximumX = 90F;
-    public bool clampHorizontalRotation = false;
     public float MinimumY = -70f;
     public float MaximumY = 70f;
-    public bool smooth;
     public float smoothSpeed = 5f;
     
     private Quaternion initRot;
@@ -33,6 +34,15 @@ public class MouseLook{
         m_CharacterTargetRot = applyInitOffset?Quaternion.identity:characterTrans.localRotation;
         m_CameraTargetRot = camTrans.localRotation;
         initRot = characterTrans.localRotation;
+    }
+    public void SetDefaultMouseLookData()=>SetMouseLookData(defaultMouseLookData);
+    public void SetMouseLookData(MouseLookData mouseLookData){
+        Sensitivity = mouseLookData.Sensitivity;
+        MinimumX = mouseLookData.MinimumX;
+        MaximumX = mouseLookData.MaximumX;
+        MinimumY = mouseLookData.MinimumY;
+        MaximumY = mouseLookData.MaximumY;
+        smoothSpeed = mouseLookData.smoothSpeed;
     }
     public void SetHorizontalLimit(Vector2 limit){
         MinimumY = limit.x;
@@ -66,7 +76,7 @@ public class MouseLook{
         if(clampVerticalRotation) m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
     }
     public void UpdateLookRotation(){
-        if(smooth){
+        if(useSmooth){
             characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, initRot * m_CharacterTargetRot,
                 smoothSpeed * Time.deltaTime);
             camTrans.localRotation = Quaternion.Slerp (camTrans.localRotation, m_CameraTargetRot,
@@ -78,7 +88,7 @@ public class MouseLook{
         }
     }
     public void UpdateHeadRotationOnly(){
-        if(smooth){
+        if(useSmooth){
             camTrans.localRotation = Quaternion.Slerp (camTrans.localRotation, m_CameraTargetRot*m_CharacterTargetRot,
                 smoothSpeed * Time.deltaTime);
         }
