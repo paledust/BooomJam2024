@@ -24,6 +24,7 @@ public class MouseLook{
     public float MaximumY = 70f;
     public bool smooth;
     public float smoothSpeed = 5f;
+    
     private Quaternion initRot;
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
@@ -44,27 +45,15 @@ public class MouseLook{
     public void SetSensitivity(float _sensitivity){
         Sensitivity = _sensitivity;
     }
-    public void AlignTargetRotationWithView(){
-        m_CharacterTargetRot = characterTrans.localRotation;
-        m_CameraTargetRot    = camTrans.localRotation; 
-    }
-    public void RecalculateRotationFromViewImmediately(){
-        var _mainCamTransRot = Camera.main.transform.rotation;
-        characterTrans.rotation = Quaternion.Euler(0,_mainCamTransRot.eulerAngles.y,0);
-        Quaternion localRot = Quaternion.Inverse(characterTrans.rotation) * _mainCamTransRot;
-
-        m_CharacterTargetRot = Quaternion.identity;
-        m_CameraTargetRot = Quaternion.Euler(localRot.eulerAngles.x,0,0);
-
-        characterTrans.localRotation = m_CharacterTargetRot;
-        camTrans.localRotation = m_CameraTargetRot;
-    }
+    public void RecalculateRotationFromViewImmediately()=>RecalculateRotationFromTransform(Camera.main.transform);
     public void RecalculateRotationFromTransform(Transform target){
         characterTrans.rotation = Quaternion.Euler(0,target.rotation.eulerAngles.y,0);
 
         Quaternion localRot = Quaternion.Inverse(characterTrans.rotation) * target.rotation;
-        m_CameraTargetRot   = Quaternion.Euler(localRot.eulerAngles.x, 0, 0);
         m_CharacterTargetRot= Quaternion.identity;
+        m_CameraTargetRot   = Quaternion.Euler(localRot.eulerAngles.x, 0, 0);
+        initRot = characterTrans.rotation;
+        camTrans.localRotation = m_CameraTargetRot;
     }
     public void LookRotation(Vector2 input){
         float yRot = input.x * Sensitivity;
