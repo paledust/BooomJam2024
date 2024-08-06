@@ -1510,7 +1510,6 @@ GameObject:
   - component: {fileID: 979583061}
   - component: {fileID: 979583060}
   - component: {fileID: 979583059}
-  - component: {fileID: 979583058}
   m_Layer: 6
   m_Name: Power HItbox
   m_TagString: Untagged
@@ -1533,21 +1532,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2029341769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &979583058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 979583056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfe387c969f6ad42a44467d3b50f32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sfx_clickSound: 
-  hitbox: {fileID: 979583059}
-  isAvailable: 1
 --- !u!65 &979583059
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2454,7 +2438,6 @@ GameObject:
   - component: {fileID: 2043488484}
   - component: {fileID: 2043488483}
   - component: {fileID: 2043488482}
-  - component: {fileID: 2043488481}
   m_Layer: 6
   m_Name: Channel Hitbox
   m_TagString: Untagged
@@ -2477,21 +2460,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2029341769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2043488481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043488479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bfe387c969f6ad42a44467d3b50f32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sfx_clickSound: 
-  hitbox: {fileID: 2043488482}
-  isAvailable: 1
 --- !u!65 &2043488482
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -82,6 +82,8 @@ MonoBehaviour:
   m_mouseLook:
     defaultMouseLookData:
       Sensitivity: 0.1
+      offsetWidth: 0
+      offsetHeight: 0
       MinimumX: -70
       MaximumX: 60
       MinimumY: -55
@@ -94,6 +96,8 @@ MonoBehaviour:
     clampHorizontalRotation: 1
     useSmooth: 1
     Sensitivity: 0.1
+    offsetWidth: 0.05
+    offsetHeight: 0.05
     MinimumX: -70
     MaximumX: 60
     MinimumY: -55

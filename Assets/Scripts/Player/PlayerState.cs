@@ -7,13 +7,13 @@ public class PlayerState : State<PlayerControl>
 {
     public override State<PlayerControl> UpdateState(PlayerControl context)
     {
-        context.m_mouseLook.UpdateLookRotation();
+        context.m_mouseLook.UpdateLookTrans();
         context.RaycastDetectInteractable();
         return null;
     }
     public virtual void HandleLook(InputValue value, PlayerControl context){
         Vector2 input = value.Get<Vector2>();
-        context.m_mouseLook.LookRotation(input);
+        context.m_mouseLook.HandleLookInput(input);
     }
     public virtual void HandleClick(InputValue value, PlayerControl context){
     //Pressing Behavior

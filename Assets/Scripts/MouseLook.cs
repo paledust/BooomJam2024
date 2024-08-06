@@ -4,6 +4,8 @@ using UnityEngine;
 public class MouseLookData
 {
     public float Sensitivity = .15f;
+    public float offsetWidth = 0;
+    public float offsetHeight = 0;
     public float MinimumX = -90f;
     public float MaximumX = 90f;
     public float MinimumY = -90f;
@@ -16,28 +18,34 @@ public class MouseLook{
     [SerializeField] private Transform characterTrans;
     [SerializeField] private Transform camTrans;
     [SerializeField] private bool applyInitOffset;
-    public bool clampVerticalRotation = true;
-    public bool clampHorizontalRotation = false;
-    public bool useSmooth;
-    public float Sensitivity = 0.15f;
-    public float MinimumX = -90F;
-    public float MaximumX = 90F;
-    public float MinimumY = -70f;
-    public float MaximumY = 70f;
-    public float smoothSpeed = 5f;
+    [SerializeField] private bool clampVerticalRotation = true;
+    [SerializeField] private bool clampHorizontalRotation = false;
+    [SerializeField] private bool useSmooth;
+    [SerializeField] private float Sensitivity = 0.15f;
+    [SerializeField] private float offsetWidth = 0;
+    [SerializeField] private float offsetHeight = 0;
+    [SerializeField] private float MinimumX = -90F;
+    [SerializeField] private float MaximumX = 90F;
+    [SerializeField] private float MinimumY = -70f;
+    [SerializeField] private float MaximumY = 70f;
+    [SerializeField] private float smoothSpeed = 5f;
     
     private Quaternion initRot;
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
+    private Vector3 m_camTargetOffset;
 
     public void Init(){
         m_CharacterTargetRot = applyInitOffset?Quaternion.identity:characterTrans.localRotation;
         m_CameraTargetRot = camTrans.localRotation;
+        m_camTargetOffset = camTrans.localPosition;
         initRot = characterTrans.localRotation;
     }
     public void SetDefaultMouseLookData()=>SetMouseLookData(defaultMouseLookData);
     public void SetMouseLookData(MouseLookData mouseLookData){
-        Sensitivity = mouseLookData.Sensitivity;
+        Sensitivity  = mouseLookData.Sensitivity;
+        offsetHeight = mouseLookData.offsetHeight;
+        offsetWidth  = mouseLookData.offsetWidth;
         MinimumX = mouseLookData.MinimumX;
         MaximumX = mouseLookData.MaximumX;
         MinimumY = mouseLookData.MinimumY;
@@ -65,36 +73,34 @@ public class MouseLook{
         initRot = characterTrans.rotation;
         camTrans.localRotation = m_CameraTargetRot;
     }
-    public void LookRotation(Vector2 input){
-        float yRot = input.x * Sensitivity;
-        float xRot = input.y * Sensitivity;
+    public void HandleLookInput(Vector2 input){
+        float yInput = input.x * Sensitivity;
+        float xInput = input.y * Sensitivity;
 
-        m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
+        m_CharacterTargetRot *= Quaternion.Euler (0f, yInput, 0f);
         if(clampHorizontalRotation) m_CharacterTargetRot = ClampRotationAroundYAxis (m_CharacterTargetRot);
 
-        m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
+        m_CameraTargetRot *= Quaternion.Euler (-xInput, 0f, 0f);
         if(clampVerticalRotation) m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
+
+        m_camTargetOffset.x = Mathf.Clamp(m_camTargetOffset.x, -offsetWidth/2f, offsetWidth/2f);
+        m_camTargetOffset.y = Mathf.Clamp(m_camTargetOffset.y, -offsetHeight/2f, offsetHeight/2f);
     }
-    public void UpdateLookRotation(){
+    public void UpdateLookTrans(){
         if(useSmooth){
+            float lerp = smoothSpeed * Time.deltaTime;
             characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, initRot * m_CharacterTargetRot,
-                smoothSpeed * Time.deltaTime);
+                lerp);
             camTrans.localRotation = Quaternion.Slerp (camTrans.localRotation, m_CameraTargetRot,
-                smoothSpeed * Time.deltaTime);
+                lerp);
+
+            camTrans.localPosition = Vector3.Lerp(camTrans.localPosition, m_camTargetOffset, lerp);
         }
         else{
             characterTrans.localRotation = initRot * m_CharacterTargetRot;
             camTrans.localRotation = m_CameraTargetRot;
+            camTrans.localPosition = m_camTargetOffset;
         }
-    }
-    public void UpdateHeadRotationOnly(){
-        if(useSmooth){
-            camTrans.localRotation = Quaternion.Slerp (camTrans.localRotation, m_CameraTargetRot*m_CharacterTargetRot,
-                smoothSpeed * Time.deltaTime);
-        }
-        else{
-            camTrans.localRotation = m_CameraTargetRot*m_CharacterTargetRot;
-        }        
     }
     Quaternion ClampRotationAroundXAxis(Quaternion q){
         q.x /= q.w;
