@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -14,15 +16,24 @@ public class PlayerControl : MonoBehaviour
 #endregion
     private Camera mainCam;
     private PlayerState currentPlayerState;
+    public bool m_controlable{get{return !isTransition;}}
     public Vector3 m_hoverPos{get; private set;}
     public Basic_Clickable m_hoveringInteractable{get; private set;} //The hovering interactable
     public Basic_Clickable m_holdingInteractable{get; private set;} //Currently holding interactable (Not hold by Maie's hand, but by cursor)
 
     private CoroutineExcuter ppFader;
+    private bool isTransition;
+    private Vector3 defaultPos;
+    private Quaternion defaultRot;
+    private Vector3 lastOverviewEuler;
+
     void Start(){
         m_mouseLook.Init();
         mainCam = Camera.main;
         ppFader = new CoroutineExcuter(this);
+
+        defaultPos = transform.position;
+        defaultRot = transform.rotation;
 
         currentPlayerState = new OverviewState();
         currentPlayerState.EnterState(this);
@@ -43,8 +54,7 @@ public class PlayerControl : MonoBehaviour
             ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(1,0,EasingFunc.Easing.QuadEaseOut(t))));
         }
     }
-    public void RaycastDetectInteractable(){
-        Ray ray = mainCam.ViewportPointToRay(Vector2.one*0.5f);
+    public void RaycastDetectInteractable(Ray ray){
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Service.interactableLayerMask)){
             Basic_Clickable hit_Interactable = hit.collider.GetComponent<Basic_Clickable>();
             m_hoverPos = hit.point;
@@ -71,8 +81,48 @@ public class PlayerControl : MonoBehaviour
     }
 #endregion
 
-#region Input
-    void OnClick(InputValue value)=>currentPlayerState.HandleClick(value, this);
-    private void OnLook(InputValue value)=>currentPlayerState.HandleLook(value, this);
+#region State Func
+    public void GoToObserveView(CinemachineCamera c_cam,MouseLookData mouseLookData){
+        currentPlayerState = new ObserveState();
+        currentPlayerState.EnterState(this);
+        lastOverviewEuler = m_mouseLook.GetPoseEuler();
+        StartCoroutine(coroutineBlinkTransition_Twice(()=>{
+            transform.position = c_cam.transform.position;
+            transform.rotation = c_cam.transform.rotation;
+
+            m_mouseLook.ResetRotation();
+            m_mouseLook.SetMouseLookData(mouseLookData);
+        }));
+    }
+    public void GoToOverview(){
+        currentPlayerState = new OverviewState();
+        currentPlayerState.EnterState(this);
+        StartCoroutine(coroutineBlinkTransition_Once(()=>{
+            transform.position = defaultPos;
+            transform.rotation = defaultRot;
+
+            m_mouseLook.ResetRotation(lastOverviewEuler);
+            m_mouseLook.SetDefaultMouseLookData();
+        }));
+    }
 #endregion
+
+#region Input
+    void OnRightClick(InputValue value)=>currentPlayerState.HandleRightClick(value, this);
+    void OnClick(InputValue value)=>currentPlayerState.HandleClick(value, this);
+    void OnLook(InputValue value)=>currentPlayerState.HandleLook(value, this);
+#endregion
+
+    IEnumerator coroutineBlinkTransition_Twice(Action transitionAction){
+        isTransition = true;
+        eyeControl.BlinkEye(()=>
+        StartCoroutine(CommonCoroutine.coroutineWait(0.25f, ()=>
+        eyeControl.BlinkEye(0.1f, transitionAction, ()=>isTransition = false))));
+        yield return null;
+    }
+    IEnumerator coroutineBlinkTransition_Once(Action transitionAction){
+        isTransition = true;
+        eyeControl.BlinkEye(0.1f, transitionAction, ()=>isTransition = false);
+        yield return null;
+    }
 }

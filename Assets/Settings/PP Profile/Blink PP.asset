@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blink PP
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 8144181732778145352}
+  - {fileID: 7064613380883128647}
 --- !u!114 &5569384583219727185
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -37,6 +37,28 @@ MonoBehaviour:
   verticalBlur:
     m_OverrideState: 0
     m_Value: 0.05
+--- !u!114 &7064613380883128647
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: BlurVolumeComponent
+  m_EditorClassIdentifier: Assembly-CSharp::BlurVolumeComponent
+  active: 1
+  isActive:
+    m_OverrideState: 1
+    m_Value: 1
+  horizontalBlur:
+    m_OverrideState: 1
+    m_Value: 0.01
+  verticalBlur:
+    m_OverrideState: 1
+    m_Value: 0.01
 --- !u!114 &8144181732778145352
 MonoBehaviour:
   m_ObjectHideFlags: 3

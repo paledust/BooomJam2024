@@ -30,16 +30,14 @@ public class MouseLook{
     [SerializeField] private float MaximumY = 70f;
     [SerializeField] private float smoothSpeed = 5f;
     
-    private Quaternion initRot;
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
-    private Vector3 m_camTargetOffset;
+    private Vector3 m_headOffset;
 
     public void Init(){
-        m_CharacterTargetRot = applyInitOffset?Quaternion.identity:characterTrans.localRotation;
+        m_CharacterTargetRot = characterTrans.localRotation;
         m_CameraTargetRot = camTrans.localRotation;
-        m_camTargetOffset = camTrans.localPosition;
-        initRot = characterTrans.localRotation;
+        m_headOffset = characterTrans.localPosition;
     }
     public void SetDefaultMouseLookData()=>SetMouseLookData(defaultMouseLookData);
     public void SetMouseLookData(MouseLookData mouseLookData){
@@ -63,15 +61,17 @@ public class MouseLook{
     public void SetSensitivity(float _sensitivity){
         Sensitivity = _sensitivity;
     }
-    public void RecalculateRotationFromViewImmediately()=>RecalculateRotationFromTransform(Camera.main.transform);
-    public void RecalculateRotationFromTransform(Transform target){
-        characterTrans.rotation = Quaternion.Euler(0,target.rotation.eulerAngles.y,0);
-
-        Quaternion localRot = Quaternion.Inverse(characterTrans.rotation) * target.rotation;
+    public void ResetRotation(){
         m_CharacterTargetRot= Quaternion.identity;
-        m_CameraTargetRot   = Quaternion.Euler(localRot.eulerAngles.x, 0, 0);
-        initRot = characterTrans.rotation;
-        camTrans.localRotation = m_CameraTargetRot;
+        m_CameraTargetRot   = Quaternion.identity;
+        characterTrans.localRotation = m_CharacterTargetRot;
+        camTrans.localRotation  = m_CameraTargetRot;
+    }
+    public void ResetRotation(Vector3 euler){
+        m_CharacterTargetRot= Quaternion.Euler(0, euler.y, 0);
+        m_CameraTargetRot   = Quaternion.Euler(euler.x, 0, 0);
+        characterTrans.localRotation = m_CharacterTargetRot;
+        camTrans.localRotation  = m_CameraTargetRot;
     }
     public void HandleLookInput(Vector2 input){
         float yInput = input.x * Sensitivity;
@@ -83,24 +83,31 @@ public class MouseLook{
         m_CameraTargetRot *= Quaternion.Euler (-xInput, 0f, 0f);
         if(clampVerticalRotation) m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
 
-        m_camTargetOffset.x = Mathf.Clamp(m_camTargetOffset.x, -offsetWidth/2f, offsetWidth/2f);
-        m_camTargetOffset.y = Mathf.Clamp(m_camTargetOffset.y, -offsetHeight/2f, offsetHeight/2f);
+        float yAngle = m_CharacterTargetRot.eulerAngles.y;
+        if(yAngle>180) yAngle = yAngle-360f;
+        float xAngle = m_CameraTargetRot.eulerAngles.x;
+        if(xAngle>180) xAngle = xAngle-360f;
+        m_headOffset.x = yAngle/(MaximumY-MinimumY) * offsetWidth;
+        m_headOffset.y = -xAngle/(MaximumX-MinimumX) * offsetHeight;
     }
     public void UpdateLookTrans(){
+        characterTrans.localPosition = m_headOffset;
         if(useSmooth){
             float lerp = smoothSpeed * Time.deltaTime;
-            characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, initRot * m_CharacterTargetRot,
+            characterTrans.localRotation = Quaternion.Slerp (characterTrans.localRotation, m_CharacterTargetRot,
                 lerp);
             camTrans.localRotation = Quaternion.Slerp (camTrans.localRotation, m_CameraTargetRot,
                 lerp);
-
-            camTrans.localPosition = Vector3.Lerp(camTrans.localPosition, m_camTargetOffset, lerp);
         }
         else{
-            characterTrans.localRotation = initRot * m_CharacterTargetRot;
+            characterTrans.localRotation = m_CharacterTargetRot;
             camTrans.localRotation = m_CameraTargetRot;
-            camTrans.localPosition = m_camTargetOffset;
         }
+    }
+    public Vector3 GetPoseEuler(){
+        Vector3 euler = Vector3.zero;
+        euler = m_CameraTargetRot.eulerAngles+m_CharacterTargetRot.eulerAngles;
+        return euler;
     }
     Quaternion ClampRotationAroundXAxis(Quaternion q){
         q.x /= q.w;

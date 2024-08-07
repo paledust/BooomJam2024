@@ -6,9 +6,9 @@ using UnityEngine;
 public class Clickable_SwitchView : Basic_Clickable
 {
     [SerializeField] private CinemachineCamera camView;
+    [SerializeField] private MouseLookData mouseLookData;
     public override void OnClick(PlayerControl player)
     {
-        player.m_mouseLook.RecalculateRotationFromTransform(camView.transform);
-        player.transform.position = camView.transform.position;
+        player.GoToObserveView(camView, mouseLookData);
     }
 }

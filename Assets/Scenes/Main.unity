@@ -440,7 +440,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268277, z: 0, w: 0.92387986}
-  m_LocalPosition: {x: 1.075, y: 0.5, z: -7.662}
+  m_LocalPosition: {x: 1.628, y: 0.694, z: -7.126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -671,6 +671,39 @@ Transform:
   - {fileID: 4156878814142144197}
   - {fileID: 143823340}
   - {fileID: 4579849916618407714}
+  m_Father: {fileID: 1794630371}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &557256004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 557256005}
+  m_Layer: 0
+  m_Name: '#Interactions'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &557256005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557256004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2091059415}
+  - {fileID: 796493052}
   m_Father: {fileID: 1794630371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &598437515
@@ -1016,7 +1049,7 @@ GameObject:
   m_Component:
   - component: {fileID: 796493052}
   m_Layer: 0
-  m_Name: '#OverlaysGroup'
+  m_Name: Overlays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,7 +1072,7 @@ Transform:
   - {fileID: 713543590}
   - {fileID: 1511476157}
   - {fileID: 941966713}
-  m_Father: {fileID: 1794630371}
+  m_Father: {fileID: 557256005}
   m_LocalEulerAnglesHint: {x: 0, y: -19.93, z: 0}
 --- !u!1 &824765636
 GameObject:
@@ -1498,6 +1531,15 @@ MonoBehaviour:
   hitbox: {fileID: 941966714}
   isAvailable: 1
   camView: {fileID: 1472802311}
+  mouseLookData:
+    Sensitivity: 0.001
+    offsetWidth: 0.04
+    offsetHeight: 0.015
+    MinimumX: -1
+    MaximumX: 1
+    MinimumY: -1
+    MaximumY: 1
+    smoothSpeed: 5
 --- !u!1 &979583056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,8 +1843,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: -1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20230301
@@ -2031,13 +2073,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2091059415}
   - {fileID: 3331869381725891660}
   - {fileID: 2903304143702548533}
   - {fileID: 6919347960512687301}
   - {fileID: 552163791}
   - {fileID: 543450652997770531}
-  - {fileID: 796493052}
+  - {fileID: 557256005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799885591
@@ -2152,7 +2193,7 @@ Transform:
   m_GameObject: {fileID: 1810473857}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.38268277, z: -0, w: 0.92387986}
-  m_LocalPosition: {x: 1.669, y: 0.697, z: -7.113}
+  m_LocalPosition: {x: 1.628, y: 0.694, z: -7.126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2171,8 +2212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: -1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20230301
@@ -2566,7 +2607,7 @@ Transform:
   - {fileID: 923350632}
   - {fileID: 2130827140}
   - {fileID: 2029341769}
-  m_Father: {fileID: 1794630371}
+  m_Father: {fileID: 557256005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2091059416
 MonoBehaviour:
@@ -2738,6 +2779,15 @@ MonoBehaviour:
   hitbox: {fileID: 2130827141}
   isAvailable: 1
   camView: {fileID: 1810473859}
+  mouseLookData:
+    Sensitivity: 0.001
+    offsetWidth: 0.08
+    offsetHeight: 0.06
+    MinimumX: -1
+    MaximumX: 1
+    MinimumY: -2
+    MaximumY: 2
+    smoothSpeed: 5
 --- !u!33 &14969907071638081
 MeshFilter:
   m_ObjectHideFlags: 0

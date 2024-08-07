@@ -6,6 +6,10 @@ using EasingFunc;
 using TMPro;
 
 public static class CommonCoroutine{
+    public static IEnumerator coroutineWait(float sec, Action callback){
+        yield return new WaitForSeconds(sec);
+        callback?.Invoke();
+    }
     public static IEnumerator coroutineFadeSprite(SpriteRenderer m_sprite, float targetAlpha, float duration, float delay = 0){
         yield return new WaitForSeconds(delay);
         if(targetAlpha == 1) m_sprite.enabled = true;
