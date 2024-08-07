@@ -10,5 +10,6 @@ public class Clickable_SwitchView : Basic_Clickable
     public override void OnClick(PlayerControl player)
     {
         player.GoToObserveView(camView, mouseLookData);
+        DisableHitbox();
     }
 }

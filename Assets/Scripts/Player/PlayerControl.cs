@@ -14,7 +14,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float focusTime = 0.2f;
     [SerializeField] private Volume focusVolume; 
 #endregion
-    private Camera mainCam;
     private PlayerState currentPlayerState;
     public bool m_controlable{get{return !isTransition;}}
     public Vector3 m_hoverPos{get; private set;}
@@ -29,7 +28,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start(){
         m_mouseLook.Init();
-        mainCam = Camera.main;
+        
         ppFader = new CoroutineExcuter(this);
 
         defaultPos = transform.position;
@@ -83,8 +82,6 @@ public class PlayerControl : MonoBehaviour
 
 #region State Func
     public void GoToObserveView(CinemachineCamera c_cam,MouseLookData mouseLookData){
-        currentPlayerState = new ObserveState();
-        currentPlayerState.EnterState(this);
         lastOverviewEuler = m_mouseLook.GetPoseEuler();
         StartCoroutine(coroutineBlinkTransition_Twice(()=>{
             transform.position = c_cam.transform.position;
@@ -92,17 +89,21 @@ public class PlayerControl : MonoBehaviour
 
             m_mouseLook.ResetRotation();
             m_mouseLook.SetMouseLookData(mouseLookData);
+
+            currentPlayerState = new ObserveState();
+            currentPlayerState.EnterState(this);
         }));
     }
     public void GoToOverview(){
-        currentPlayerState = new OverviewState();
-        currentPlayerState.EnterState(this);
         StartCoroutine(coroutineBlinkTransition_Once(()=>{
             transform.position = defaultPos;
             transform.rotation = defaultRot;
 
             m_mouseLook.ResetRotation(lastOverviewEuler);
             m_mouseLook.SetDefaultMouseLookData();
+
+            currentPlayerState = new OverviewState();
+            currentPlayerState.EnterState(this);
         }));
     }
 #endregion

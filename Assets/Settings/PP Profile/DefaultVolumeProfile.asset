@@ -141,6 +141,28 @@ MonoBehaviour:
   tint:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-4077847864502656910
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92e3c188a644094ea853d6c8ba8d368, type: 3}
+  m_Name: BlurVolumeComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  isActive:
+    m_OverrideState: 1
+    m_Value: 1
+  horizontalBlur:
+    m_OverrideState: 1
+    m_Value: 0
+  verticalBlur:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-3438897629319646954
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -294,7 +316,7 @@ MonoBehaviour:
   - {fileID: 5435820135156796842}
   - {fileID: 7623777712216248220}
   - {fileID: -7130288881332431024}
-  - {fileID: 8082077968798471888}
+  - {fileID: -4077847864502656910}
 --- !u!114 &1450064375301423079
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -773,12 +795,15 @@ MonoBehaviour:
   m_Name: Blur_URP
   m_EditorClassIdentifier: 
   active: 1
-  blurAmount:
-    m_OverrideState: 1
+  isActive:
+    m_OverrideState: 0
+    m_Value: 1
+  horizontalBlur:
+    m_OverrideState: 0
     m_Value: 0
-  sampleAmount:
-    m_OverrideState: 1
-    m_Value: 15
+  verticalBlur:
+    m_OverrideState: 0
+    m_Value: 0
 --- !u!114 &8938779164454471137
 MonoBehaviour:
   m_ObjectHideFlags: 3

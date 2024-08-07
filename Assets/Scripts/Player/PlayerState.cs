@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerState : State<PlayerControl>
 {
     protected Camera mainCam;
+    protected bool blinkWithClick = true;
     public override void EnterState(PlayerControl context)
     {
         mainCam = Camera.main;
@@ -24,7 +25,7 @@ public class PlayerState : State<PlayerControl>
         if(!context.m_controlable) return;
     //Pressing Behavior
         if(value.isPressed){
-            context.eyeControl.BlinkEye();
+            if(blinkWithClick) context.eyeControl.BlinkEye();
             if(context.m_holdingInteractable != null) return;
             if(context.m_hoveringInteractable == null) return;
         //Interact with object
@@ -48,6 +49,11 @@ public class PlayerState : State<PlayerControl>
     public virtual void HandleRightClick(InputValue value, PlayerControl context){}
 }
 public class OverviewState: PlayerState{
+    public override void EnterState(PlayerControl context)
+    {
+        base.EnterState(context);
+        EventHandler.Call_UI_SwitchFreeCursor(false);
+    }
     public override State<PlayerControl> UpdateState(PlayerControl context)
     {
         base.UpdateState(context);
@@ -57,14 +63,25 @@ public class OverviewState: PlayerState{
     }
 }
 public class ObserveState: PlayerState{
-    public float mouseSpeed = 1;
+    public float mouseSpeed = 0.1f;
+    protected new bool blinkWithClick = false;
     private Vector2 mouseViewPortPos;
+    public override void EnterState(PlayerControl context)
+    {
+        base.EnterState(context);
+        mouseViewPortPos = Vector2.one*0.5f;
+        EventHandler.Call_UI_SwitchFreeCursor(true);
+        EventHandler.Call_UI_OnCursorPosChange(mouseViewPortPos);
+    }
     public override void HandleLook(InputValue value, PlayerControl context){
         if(!context.m_controlable) return;
         Vector2 input = value.Get<Vector2>();
         context.m_mouseLook.HandleLookInput(input);
+        input.y *= mainCam.pixelWidth/mainCam.pixelHeight;
 
         mouseViewPortPos += input*mouseSpeed*Time.deltaTime;
+        mouseViewPortPos.x = Mathf.Clamp01(mouseViewPortPos.x);
+        mouseViewPortPos.y = Mathf.Clamp01(mouseViewPortPos.y);
         EventHandler.Call_UI_OnCursorPosChange(mouseViewPortPos);
     }
     public override State<PlayerControl> UpdateState(PlayerControl context)
