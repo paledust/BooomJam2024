@@ -36,8 +36,8 @@ public abstract class Basic_Clickable : MonoBehaviour
         if(gameObject.activeInHierarchy && isAvailable) OnBecomeInteractable();
         m_hitbox.enabled = true;
     }
-    public void EnableRaycast()=>gameObject.layer = Service.interactableLayer;
-    public void DisableRaycast()=>gameObject.layer = Service.ignoreRaycastLayer;
+    public void EnableRaycast()=>gameObject.layer = Service.InteractableLayer;
+    public void DisableRaycast()=>gameObject.layer = Service.IgnoreRaycastLayer;
 #endregion
 
     void Reset()=>hitbox = GetComponent<Collider>();

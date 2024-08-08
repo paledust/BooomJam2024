@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class OverlayController : MonoBehaviour
 {
+    [SerializeField] private TVController tvController;
     [SerializeField] private Clickable_Overlay[] overlays;
     [SerializeField] private Clickable_OverlayView overlayView;
+
+    private Clickable_Overlay busyOverlay;
+
     void OnEnable(){
         EventHandler.E_OnPlayerOverview += handlePlayerOverview;
     }
@@ -20,7 +24,14 @@ public class OverlayController : MonoBehaviour
     }
     public void OnOverlayView(){
         foreach(var overlay in overlays){
-            overlay.EnableHitbox();
+            if(overlay.m_canInteract)overlay.EnableHitbox();
         }
+    }
+    public void StickOverlayOnTV(Clickable_Overlay overlay, GameObject stickItem){
+        if(busyOverlay!=null){
+            busyOverlay.ResetOverlay();
+        }
+        busyOverlay = overlay;
+        tvController.StickOverlay(stickItem);
     }
 }

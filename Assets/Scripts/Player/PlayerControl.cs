@@ -99,15 +99,22 @@ public class PlayerControl : MonoBehaviour
 #endregion
 
 #region State Func
-    public void GoToInspectItem(GameObject item){
+    public void GoToInspectItem(IInspectable inspectable, GameObject item){
         inspectingCam.gameObject.SetActive(true);
 
         inspectingObject = Instantiate(item, inspectingRoot);
+        inspectingObject.layer = Service.InspectingLayer;
 
-        currentPlayerState = new InspecteState();
+        var tempState = currentPlayerState;
+        currentPlayerState = new InspecteState(){lastState = tempState,
+                                                inspectable = inspectable};
         currentPlayerState.EnterState(this);
     }
-    public void GoToObserveView(CinemachineCamera c_cam,MouseLookData mouseLookData){
+    public void ExitInspectItem(){
+        Destroy(inspectingObject);
+        inspectingCam.gameObject.SetActive(false);
+    }
+    public void GoToObserveView(CinemachineCamera c_cam, MouseLookData mouseLookData){
         lastOverviewEuler = m_mouseLook.GetPoseEuler();
         StartCoroutine(coroutineBlinkTransition_Twice(()=>{
             transform.position = c_cam.transform.position;
@@ -135,7 +142,14 @@ public class PlayerControl : MonoBehaviour
 #endregion
 
 #region Input
-    void OnRightClick(InputValue value)=>currentPlayerState.HandleRightClick(value, this);
+    void OnRightClick(InputValue value){
+        var newState = currentPlayerState.HandleRightClick(value, this);
+        if(newState!=null){
+            currentPlayerState = newState as PlayerState;
+            currentPlayerState.EnterState(this);
+        }
+    
+    }
     void OnClick(InputValue value)=>currentPlayerState.HandleClick(value, this);
     void OnLook(InputValue value)=>currentPlayerState.HandleLook(value, this);
 #endregion

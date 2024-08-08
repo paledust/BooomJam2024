@@ -5,6 +5,10 @@ using UnityEngine;
 public class TVController : MonoBehaviour
 {
     [SerializeField] private Clickable_SwitchView tvView;
+    [SerializeField] private Transform overlayRoot;
+
+    private GameObject stickingItem;
+
     void OnEnable(){
         EventHandler.E_OnPlayerOverview += handlePlayerOverview;
     }
@@ -13,5 +17,14 @@ public class TVController : MonoBehaviour
     }
     void handlePlayerOverview(){
         tvView.EnableHitbox();
+    }
+    public void StickOverlay(GameObject stickOverlay){
+        if(stickingItem!=null) Destroy(stickingItem);
+        tvView.OnClick(FindFirstObjectByType<PlayerControl>());
+        stickingItem = Instantiate(stickOverlay);
+        stickingItem.transform.parent = overlayRoot;
+        stickingItem.transform.localPosition = Vector3.zero;
+        stickingItem.transform.localRotation = Quaternion.Euler(Random.Range(85,95),90,90);
+        stickingItem.layer = Service.DefaultLayer;
     }
 }

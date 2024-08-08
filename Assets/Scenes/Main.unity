@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdefa4c1ae2f624592e9b754d0238be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tvController: {fileID: 2091059416}
   overlays:
   - {fileID: 1897796931}
   - {fileID: 1995861090}
@@ -1524,6 +1525,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127849412}
   m_Mesh: {fileID: -6490093165109295044, guid: 3e435ed7a86c0d14290247eb58dd10e4, type: 3}
+--- !u!1 &1175594657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1175594658}
+  m_Layer: 0
+  m_Name: StickOverlayRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1175594658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175594657}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.042, y: -0.13, z: 0.457}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2091059415}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &1472802309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,10 +2001,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
         type: 3}
+      propertyPath: inspectItem
+      value: 
+      objectReference: {fileID: 22248531374267173, guid: f8032c353e80d2444b122475f0288023,
+        type: 3}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
       propertyPath: overlayItem
       value: 
       objectReference: {fileID: 22248531374267173, guid: f8032c353e80d2444b122475f0288023,
         type: 3}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: overlayController
+      value: 
+      objectReference: {fileID: 796493053}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2066,10 +2109,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
         type: 3}
+      propertyPath: inspectItem
+      value: 
+      objectReference: {fileID: 22248531374267173, guid: a6ea00cf45804c1438832e6fb0e43a21,
+        type: 3}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
       propertyPath: overlayItem
       value: 
       objectReference: {fileID: 22248531374267173, guid: a6ea00cf45804c1438832e6fb0e43a21,
         type: 3}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: overlayController
+      value: 
+      objectReference: {fileID: 796493053}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2266,6 +2320,7 @@ Transform:
   - {fileID: 923350632}
   - {fileID: 2130827140}
   - {fileID: 2029341769}
+  - {fileID: 1175594658}
   m_Father: {fileID: 557256005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2091059416
@@ -2281,6 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tvView: {fileID: 2130827144}
+  overlayRoot: {fileID: 1175594658}
 --- !u!1 &2125935720
 GameObject:
   m_ObjectHideFlags: 0
@@ -3258,10 +3314,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
         type: 3}
+      propertyPath: inspectItem
+      value: 
+      objectReference: {fileID: 22248531374267173, guid: c2c3479c08b76114491dd47c7eef8be6,
+        type: 3}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
       propertyPath: overlayItem
       value: 
       objectReference: {fileID: 22248531374267173, guid: c2c3479c08b76114491dd47c7eef8be6,
         type: 3}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: overlayController
+      value: 
+      objectReference: {fileID: 796493053}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 public class PlayerState : State<PlayerControl>
 {
     protected Camera mainCam;
-    protected bool isFocused = false;
-    protected bool blinkOnClick = true;
+
+    protected static bool blinkOnClick = true;
+    protected static bool isFocused = false;
+
     public override void EnterState(PlayerControl context)
     {
         mainCam = Camera.main;
@@ -43,12 +45,13 @@ public class PlayerState : State<PlayerControl>
             context.ReleaseHoldedInteractable();
         }
     }
-    public virtual void HandleRightClick(InputValue value, PlayerControl context){}
+    public virtual State<PlayerControl> HandleRightClick(InputValue value, PlayerControl context){return null;}
 }
 public class OverviewState: PlayerState{
     public override void EnterState(PlayerControl context)
     {
         base.EnterState(context);
+        blinkOnClick = true;
         EventHandler.Call_OnPlayerOverview(); 
         EventHandler.Call_UI_SwitchFreeCursor(false);
     }
@@ -79,6 +82,7 @@ public class ObserveState: PlayerState{
         base.EnterState(context);
         mouseViewPortPos = Vector2.one*0.5f;
         blinkOnClick = false;
+        isFocused = false;
         EventHandler.Call_UI_SwitchFreeCursor(true);
         EventHandler.Call_UI_OnCursorPosChange(mouseViewPortPos);
         EventHandler.Call_UI_OnCursorHover(false);
@@ -101,22 +105,25 @@ public class ObserveState: PlayerState{
         if(context.RaycastDetectInteractable(ray)){
             if(!isFocused){
                 isFocused = true;
-                EventHandler.Call_UI_OnCursorHover(true);
+                EventHandler.Call_UI_OnCursorHover(isFocused);
             }
         }
         else{
             if(isFocused){
                 isFocused = false;
-                EventHandler.Call_UI_OnCursorHover(false);
+                EventHandler.Call_UI_OnCursorHover(isFocused);
             }
         }
         return null;
     }
-    public override void HandleRightClick(InputValue value, PlayerControl context){
+    public override State<PlayerControl> HandleRightClick(InputValue value, PlayerControl context){
         context.GoToOverview();
+        return null;
     }
 }
 public class InspecteState: PlayerState{
+    public PlayerState lastState;
+    public IInspectable inspectable;
     public override void EnterState(PlayerControl context)
     {
         base.EnterState(context);
@@ -128,8 +135,13 @@ public class InspecteState: PlayerState{
     }
     public override void HandleClick(InputValue value, PlayerControl context)
     {
+        context.ExitInspectItem();
+        inspectable.OnConfirm();
     }
-    public override void HandleRightClick(InputValue value, PlayerControl context)
+    public override State<PlayerControl> HandleRightClick(InputValue value, PlayerControl context)
     {
+        context.ExitInspectItem();
+        inspectable.OnCancel();
+        return lastState;
     }
 }
