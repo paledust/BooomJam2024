@@ -34,14 +34,14 @@ public class PlayerEyeControl : MonoBehaviour{
             float eyeAngle = Mathf.Lerp(minEyeAngle, maxEyeAngle, (1-eyeAngleDelta));
             upperEye.transform.localRotation = Quaternion.Euler(-eyeAngle,0,0);
             lowerEye.transform.localRotation = Quaternion.Euler(eyeAngle,0,0);
-            blinkPP.weight = EasingFunc.Easing.QuadEaseOut(eyeAngleDelta);
+            blinkPP.weight = EasingFunc.Easing.CircEaseOut(eyeAngleDelta);
         });
 
         transitionAction?.Invoke();
         yield return new WaitForSeconds(darkTime);
 
         yield return new WaitForLoop(eyeReopenTime, (t)=>{
-            eyeAngleDelta = Mathf.Lerp(1, 0, EasingFunc.Easing.QuadEaseOut(t));
+            eyeAngleDelta = Mathf.Lerp(1, 0, EasingFunc.Easing.CircEaseOut(t));
             float eyeAngle = Mathf.Lerp(minEyeAngle, maxEyeAngle, (1-eyeAngleDelta));
             upperEye.transform.localRotation = Quaternion.Euler(-eyeAngle,0,0);
             lowerEye.transform.localRotation = Quaternion.Euler(eyeAngle,0,0);
