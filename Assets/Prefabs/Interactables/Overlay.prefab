@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5537346734556538899}
   - component: {fileID: 4903927745270352361}
   m_Layer: 0
-  m_Name: Overlay
+  m_Name: OverlayRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +208,8 @@ MonoBehaviour:
   sfx_clickSound: 
   hitbox: {fileID: 1879351928451502805}
   isAvailable: 1
-  overlayItem: {fileID: 0}
+  overlayRenderer: {fileID: 4903927745270352361}
+  overlayItem: {fileID: 46106503956701388}
 --- !u!1 &7737494605965544538
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,22 +10,26 @@ public class PlayerControl : MonoBehaviour
 {
     public MouseLook m_mouseLook;
     public PlayerEyeControl eyeControl;
-#region PP
+[Header("Inspecting")]
+    [SerializeField] private Camera inspectingCam; 
+    [SerializeField] private Transform inspectingRoot;
+[Header("PP")]
     [SerializeField] private float focusTime = 0.2f;
     [SerializeField] private Volume focusVolume; 
-#endregion
+
     private PlayerState currentPlayerState;
     public bool m_controlable{get{return !isTransition;}}
     public Vector3 m_hoverPos{get; private set;}
     public Basic_Clickable m_hoveringInteractable{get; private set;} //The hovering interactable
     public Basic_Clickable m_holdingInteractable{get; private set;} //Currently holding interactable (Not hold by Maie's hand, but by cursor)
 
-    private CoroutineExcuter ppFader;
     private bool isTransition;
     private Vector3 defaultPos;
-    private Quaternion defaultRot;
     private Vector3 lastOverviewEuler;
-
+    private Quaternion defaultRot;
+    private GameObject inspectingObject;
+    private CoroutineExcuter ppFader;
+    
     void Start(){
         m_mouseLook.Init();
         
@@ -45,19 +49,25 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+#region FX
+    public void FadeFocusPP(bool isFadeIn){
+        if(isFadeIn) ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(0,1,EasingFunc.Easing.QuadEaseOut(t))));
+        else ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(1,0,EasingFunc.Easing.QuadEaseOut(t))));
+    }
+#endregion
+
 #region Handle Interactable
     void ClearCurrentInteractable(){
         if(m_hoveringInteractable != null){
             m_hoveringInteractable.OnExitHover();
             m_hoveringInteractable = null;
-            if(currentPlayerState.m_focusOnHover)ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(1,0,EasingFunc.Easing.QuadEaseOut(t))));
         }
     }
-    public void RaycastDetectInteractable(Ray ray){
+    public bool RaycastDetectInteractable(Ray ray){
         if(!m_controlable){
             if(m_holdingInteractable!=null) ReleaseHoldedInteractable();
             if(m_hoveringInteractable!=null) ClearCurrentInteractable();
-            return;
+            return false;
         }
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Service.interactableLayerMask)){
             Basic_Clickable hit_Interactable = hit.collider.GetComponent<Basic_Clickable>();
@@ -65,17 +75,20 @@ public class PlayerControl : MonoBehaviour
             if(hit_Interactable!=null){
                 if(m_hoveringInteractable != hit_Interactable) {
                     if(m_hoveringInteractable!=null) m_hoveringInteractable.OnExitHover();
-                    if(currentPlayerState.m_focusOnHover) ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(0,1,EasingFunc.Easing.QuadEaseOut(t))));
                     m_hoveringInteractable = hit_Interactable;
                     if(m_hoveringInteractable.IsAvailable) m_hoveringInteractable.OnHover(this);
+                    return true;
                 }
+                return true;
             }
             else{
                 ClearCurrentInteractable();
+                return false;
             }
         }
         else{
             ClearCurrentInteractable();
+            return false;
         }        
     }
     public void HoldInteractable(Basic_Clickable interactable)=>m_holdingInteractable = interactable;
@@ -87,6 +100,12 @@ public class PlayerControl : MonoBehaviour
 
 #region State Func
     public void GoToInspectItem(GameObject item){
+        inspectingCam.gameObject.SetActive(true);
+
+        inspectingObject = Instantiate(item, inspectingRoot);
+
+        currentPlayerState = new InspecteState();
+        currentPlayerState.EnterState(this);
     }
     public void GoToObserveView(CinemachineCamera c_cam,MouseLookData mouseLookData){
         lastOverviewEuler = m_mouseLook.GetPoseEuler();

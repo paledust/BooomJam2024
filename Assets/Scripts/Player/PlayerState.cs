@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerState : State<PlayerControl>
 {
     protected Camera mainCam;
-    public bool m_focusOnHover = true;
+    protected bool isFocused = false;
     protected bool blinkOnClick = true;
     public override void EnterState(PlayerControl context)
     {
@@ -30,16 +30,12 @@ public class PlayerState : State<PlayerControl>
             if(context.m_holdingInteractable != null) return;
             if(context.m_hoveringInteractable == null) return;
         //Interact with object
-            // m_playerCommandManager.AbortCommands();
             if(context.m_hoveringInteractable.IsAvailable){
                 EventHandler.Call_OnPlayerInteract();
                 context.m_hoveringInteractable.OnClick(context);
-            //Play Click SFX
-                // m_playerAudio.PlayFeedback(m_hoveringInteractable.sfx_clickSound);
             }
             else{
                 context.m_hoveringInteractable.OnFailClick(context);
-                // m_playerAudio.PlayFeedback(string.Empty);
             }
         }
         //Releasing Behavior
@@ -60,7 +56,18 @@ public class OverviewState: PlayerState{
     {
         base.UpdateState(context);
         Ray ray = mainCam.ViewportPointToRay(Vector2.one*0.5f);
-        context.RaycastDetectInteractable(ray);
+        if(context.RaycastDetectInteractable(ray)){
+            if(!isFocused){
+                isFocused = true;
+                context.FadeFocusPP(isFocused);
+            }
+        }
+        else{
+            if(isFocused){
+                isFocused = false;
+                context.FadeFocusPP(isFocused);
+            }
+        }
         return null;
     }
 }
@@ -71,10 +78,10 @@ public class ObserveState: PlayerState{
     {
         base.EnterState(context);
         mouseViewPortPos = Vector2.one*0.5f;
-        m_focusOnHover = false;
         blinkOnClick = false;
         EventHandler.Call_UI_SwitchFreeCursor(true);
         EventHandler.Call_UI_OnCursorPosChange(mouseViewPortPos);
+        EventHandler.Call_UI_OnCursorHover(false);
     }
     public override void HandleLook(InputValue value, PlayerControl context){
         if(!context.m_controlable) return;
@@ -91,10 +98,38 @@ public class ObserveState: PlayerState{
     {
         base.UpdateState(context);
         Ray ray = mainCam.ViewportPointToRay(mouseViewPortPos);
-        context.RaycastDetectInteractable(ray);
+        if(context.RaycastDetectInteractable(ray)){
+            if(!isFocused){
+                isFocused = true;
+                EventHandler.Call_UI_OnCursorHover(true);
+            }
+        }
+        else{
+            if(isFocused){
+                isFocused = false;
+                EventHandler.Call_UI_OnCursorHover(false);
+            }
+        }
         return null;
     }
     public override void HandleRightClick(InputValue value, PlayerControl context){
         context.GoToOverview();
+    }
+}
+public class InspecteState: PlayerState{
+    public override void EnterState(PlayerControl context)
+    {
+        base.EnterState(context);
+        EventHandler.Call_UI_SwitchFreeCursor(false);
+    }
+    public override State<PlayerControl> UpdateState(PlayerControl context)
+    {
+        return null;
+    }
+    public override void HandleClick(InputValue value, PlayerControl context)
+    {
+    }
+    public override void HandleRightClick(InputValue value, PlayerControl context)
+    {
     }
 }

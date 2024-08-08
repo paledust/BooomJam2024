@@ -26,5 +26,7 @@ public static class EventHandler
     public static void Call_UI_SwitchFreeCursor(bool isFreeCursor)=>E_UI_SwitchFreeCursor?.Invoke(isFreeCursor);
     public static event Action<Vector2> E_UI_OnCursorPosChange;
     public static void Call_UI_OnCursorPosChange(Vector2 newPos)=>E_UI_OnCursorPosChange?.Invoke(newPos);
+    public static event Action<bool> E_UI_OnCursorHover;
+    public static void Call_UI_OnCursorHover(bool isHover)=>E_UI_OnCursorHover?.Invoke(isHover);
 #endregion
 }

@@ -419,7 +419,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 33
+    m_Bits: 1
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -462,7 +462,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 618495698}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -588,7 +589,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -739,6 +740,12 @@ Transform:
   - {fileID: 1054845438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &618495698 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 373154963619764986, guid: eac41d8857e94804e8385c9b551a4815,
+    type: 3}
+  m_PrefabInstance: {fileID: 1777336328844537160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &796493051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,6 +1967,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: overlayItem
+      value: 
+      objectReference: {fileID: 22248531374267173, guid: f8032c353e80d2444b122475f0288023,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2051,6 +2064,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: overlayItem
+      value: 
+      objectReference: {fileID: 22248531374267173, guid: a6ea00cf45804c1438832e6fb0e43a21,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3237,6 +3256,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay
       objectReference: {fileID: 0}
+    - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: overlayItem
+      value: 
+      objectReference: {fileID: 22248531374267173, guid: c2c3479c08b76114491dd47c7eef8be6,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

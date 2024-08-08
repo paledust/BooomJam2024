@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Clickable_Overlay : Basic_Clickable
 {
+    [SerializeField] private MeshRenderer overlayRenderer;
     [SerializeField] private GameObject overlayItem;
     public override void OnClick(PlayerControl player)
     {
-           player.GoToInspectItem(overlayItem);
+        DisableHitbox();
+        overlayRenderer.enabled = false;
+        player.GoToInspectItem(overlayItem);
     }
 }
