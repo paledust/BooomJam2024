@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TVController : MonoBehaviour
 {
-    [System.Serializable]
-    public enum TV_STATE{OVERVIEW, FOCUS}
-    public TV_STATE tvState;
-    void Start()
-    {
-        
+    [SerializeField] private Clickable_SwitchView tvView;
+    void OnEnable(){
+        EventHandler.E_OnPlayerOverview += handlePlayerOverview;
     }
-    void Update()
-    {
+    void OnDisable(){
+        EventHandler.E_OnPlayerOverview -= handlePlayerOverview;
+    }
+    void handlePlayerOverview(){
+        tvView.EnableHitbox();
     }
 }

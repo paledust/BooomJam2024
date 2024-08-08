@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerState : State<PlayerControl>
 {
     protected Camera mainCam;
-    protected bool blinkWithClick = true;
+    public bool m_focusOnHover = true;
+    protected bool blinkOnClick = true;
     public override void EnterState(PlayerControl context)
     {
         mainCam = Camera.main;
@@ -25,7 +26,7 @@ public class PlayerState : State<PlayerControl>
         if(!context.m_controlable) return;
     //Pressing Behavior
         if(value.isPressed){
-            if(blinkWithClick) context.eyeControl.BlinkEye();
+            if(blinkOnClick) context.eyeControl.BlinkEye();
             if(context.m_holdingInteractable != null) return;
             if(context.m_hoveringInteractable == null) return;
         //Interact with object
@@ -52,6 +53,7 @@ public class OverviewState: PlayerState{
     public override void EnterState(PlayerControl context)
     {
         base.EnterState(context);
+        EventHandler.Call_OnPlayerOverview(); 
         EventHandler.Call_UI_SwitchFreeCursor(false);
     }
     public override State<PlayerControl> UpdateState(PlayerControl context)
@@ -64,12 +66,13 @@ public class OverviewState: PlayerState{
 }
 public class ObserveState: PlayerState{
     public float mouseSpeed = 0.1f;
-    protected new bool blinkWithClick = false;
     private Vector2 mouseViewPortPos;
     public override void EnterState(PlayerControl context)
     {
         base.EnterState(context);
         mouseViewPortPos = Vector2.one*0.5f;
+        m_focusOnHover = false;
+        blinkOnClick = false;
         EventHandler.Call_UI_SwitchFreeCursor(true);
         EventHandler.Call_UI_OnCursorPosChange(mouseViewPortPos);
     }
@@ -87,7 +90,7 @@ public class ObserveState: PlayerState{
     public override State<PlayerControl> UpdateState(PlayerControl context)
     {
         base.UpdateState(context);
-        Ray ray = mainCam.ViewportPointToRay(Vector2.one*0.5f);
+        Ray ray = mainCam.ViewportPointToRay(mouseViewPortPos);
         context.RaycastDetectInteractable(ray);
         return null;
     }

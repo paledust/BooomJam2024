@@ -50,17 +50,22 @@ public class PlayerControl : MonoBehaviour
         if(m_hoveringInteractable != null){
             m_hoveringInteractable.OnExitHover();
             m_hoveringInteractable = null;
-            ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(1,0,EasingFunc.Easing.QuadEaseOut(t))));
+            if(currentPlayerState.m_focusOnHover)ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(1,0,EasingFunc.Easing.QuadEaseOut(t))));
         }
     }
     public void RaycastDetectInteractable(Ray ray){
+        if(!m_controlable){
+            if(m_holdingInteractable!=null) ReleaseHoldedInteractable();
+            if(m_hoveringInteractable!=null) ClearCurrentInteractable();
+            return;
+        }
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, Service.interactableLayerMask)){
             Basic_Clickable hit_Interactable = hit.collider.GetComponent<Basic_Clickable>();
             m_hoverPos = hit.point;
             if(hit_Interactable!=null){
                 if(m_hoveringInteractable != hit_Interactable) {
                     if(m_hoveringInteractable!=null) m_hoveringInteractable.OnExitHover();
-                    ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(0,1,EasingFunc.Easing.QuadEaseOut(t))));
+                    if(currentPlayerState.m_focusOnHover) ppFader.Excute(CommonCoroutine.coroutineLoop(focusTime, (t)=>focusVolume.weight = Mathf.Lerp(0,1,EasingFunc.Easing.QuadEaseOut(t))));
                     m_hoveringInteractable = hit_Interactable;
                     if(m_hoveringInteractable.IsAvailable) m_hoveringInteractable.OnHover(this);
                 }
@@ -81,6 +86,8 @@ public class PlayerControl : MonoBehaviour
 #endregion
 
 #region State Func
+    public void GoToInspectItem(GameObject item){
+    }
     public void GoToObserveView(CinemachineCamera c_cam,MouseLookData mouseLookData){
         lastOverviewEuler = m_mouseLook.GetPoseEuler();
         StartCoroutine(coroutineBlinkTransition_Twice(()=>{

@@ -13,6 +13,9 @@ public static class EventHandler
     public static void Call_AfterLoadScene(){E_AfterLoadScene?.Invoke();}
 #endregion
 
+    public static event Action E_OnPlayerOverview;
+    public static void Call_OnPlayerOverview(){E_OnPlayerOverview?.Invoke();}
+
 #region Interaction Event
     public static event Action E_OnPlayerInteract;
     public static void Call_OnPlayerInteract()=>E_OnPlayerInteract?.Invoke();
