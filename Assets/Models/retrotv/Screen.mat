@@ -14,7 +14,6 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - DISTORT_ON
-  - RGB_STRIPES_ON
   - SCROLL_STATIC_ON
   - STATIC_ON
   m_InvalidKeywords: []
@@ -89,7 +88,7 @@ Material:
     m_Floats:
     - CRT_WARP: 0
     - DISTORT: 1
-    - RGB_STRIPES: 1
+    - RGB_STRIPES: 0
     - SCROLL_STATIC: 1
     - STATIC: 1
     - Vector1_1BFF6B46: 256
@@ -107,7 +106,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortionStrength: 0.5
+    - _DistortionStrength: 0.2
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -129,14 +128,16 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ScanlineHeight: 10
+    - _ScanlineHeight: 5
     - _ScanlineStrength: 0.5
+    - _Scrolling_Static_Strength: 0.05
+    - _Scrolling_Strength: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _StaticStrength: 0.08
+    - _StaticStrength: 0.005
     - _Surface: 0
     - _UVSec: 0
     - _WorkflowMode: 1
@@ -146,6 +147,7 @@ Material:
     - _CRTWarpStrength: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 0.91132075, g: 0.9879119, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ScreenColor: {r: 1.7976471, g: 2.6491642, b: 2.9960785, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
