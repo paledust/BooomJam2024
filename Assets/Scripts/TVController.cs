@@ -5,6 +5,7 @@ using UnityEngine;
 public class TVController : MonoBehaviour
 {
     [SerializeField] private Material tvMat;
+    [SerializeField] private RenderTexture gameRT;
     [SerializeField] private int gameChannel;
     [SerializeField] private Clickable_SwitchView tvView;
     [SerializeField] private Transform overlayRoot;
@@ -13,7 +14,8 @@ public class TVController : MonoBehaviour
     [SerializeField] private Transform knobSwitch;
     [SerializeField] private Transform powerSwitch;
     private const int TOTAL_CHANNEL = 12;
-    private int currentChannel = 1;
+    private bool isOn = false;
+    private int currentChannel = 0;
     private GameObject stickingItem;
 
     void OnEnable(){
@@ -22,21 +24,33 @@ public class TVController : MonoBehaviour
     void OnDisable(){
         EventHandler.E_OnPlayerOverview -= handlePlayerOverview;
     }
+    void Start(){
+        RefreshScreen();
+        tvMat.SetFloat("_ImageBrightness", isOn?2:0);
+    }
     void handlePlayerOverview(){
         tvView.EnableHitbox();
     }
-    public void ChangeChannle(int channelIndex){
-        currentChannel = channelIndex;
+    public void ChangeChannle(){
+        currentChannel += 1;
         currentChannel %= TOTAL_CHANNEL;
         
-        knobSwitch.localRotation = Quaternion.Euler(0,-channelIndex*30,0);
-        tvMat.SetFloat("_ScrollingStaticStrength", channelIndex==gameChannel?0.001f:0.5f);
-        tvMat.SetFloat("_StaticStrength", channelIndex==gameChannel?0.001f:0.1f);
+        if(!isOn) return;
+        RefreshScreen();
 
         tvAnimation.Play();
     }
-    public void SwitchPower(bool isOn){
-        tvMat.SetFloat("_ImageBrightness", isOn?0:2);
+    public void SwitchPower(){
+        isOn = !isOn;
+        powerSwitch.localRotation = Quaternion.Euler(0,0,isOn?-8:8);
+        if(isOn) RefreshScreen();
+        tvMat.SetFloat("_ImageBrightness", isOn?2:0);
+    }
+    void RefreshScreen(){
+        knobSwitch.localRotation = Quaternion.Euler(0,-currentChannel*30,0);
+        tvMat.SetFloat("_ScrollingStaticStrength", currentChannel==gameChannel?0.001f:0.5f);
+        tvMat.SetFloat("_StaticStrength", currentChannel==gameChannel?0.001f:0.1f);
+        tvMat.SetTexture("_ScreenTexture",currentChannel==gameChannel?gameRT:null);
     }
     public void StickOverlay(GameObject stickOverlay){
         if(stickingItem!=null) Destroy(stickingItem);
