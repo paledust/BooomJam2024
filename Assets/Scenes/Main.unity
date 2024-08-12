@@ -3283,10 +3283,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a903d27a7a2c0d4792faaf5fb7b25e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tvMat: {fileID: 2100000, guid: a017cf73b2923f54c8c8e5f99b219bbb, type: 2}
-  gameRT: {fileID: 8400000, guid: 095056174d1ea3c43949e8f60303d7cd, type: 2}
   gameChannel: 5
-  tvView: {fileID: 2130827144}
+  gameRT: {fileID: 8400000, guid: 095056174d1ea3c43949e8f60303d7cd, type: 2}
+  perRendererRetro: {fileID: 3469287836794707498}
+  tvView: {fileID: 2130827145}
+  channelInteraction: {fileID: 1923346949}
+  powerInteraction: {fileID: 1965194197}
   overlayRoot: {fileID: 1175594658}
   tvAnimation: {fileID: 2091059417}
   knobSwitch: {fileID: 1642108515}
@@ -3353,7 +3355,7 @@ GameObject:
   - component: {fileID: 2130827143}
   - component: {fileID: 2130827142}
   - component: {fileID: 2130827141}
-  - component: {fileID: 2130827144}
+  - component: {fileID: 2130827145}
   m_Layer: 6
   m_Name: TV Hitbox
   m_TagString: Untagged
@@ -3449,7 +3451,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130827139}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2130827144
+--- !u!114 &2130827145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3458,7 +3460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2130827139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff7a680f13ec5ab4da2daa2e328672eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 51e2f6abd7a27fb419ba2ba2db2757e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sfx_clickSound: 
@@ -3474,6 +3476,7 @@ MonoBehaviour:
     MinimumY: -2
     MaximumY: 2
     smoothSpeed: 5
+  tVController: {fileID: 2091059416}
 --- !u!33 &14969907071638081
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3693,6 +3696,7 @@ GameObject:
   - component: {fileID: 543450652810170764}
   - component: {fileID: 3469287836794707497}
   - component: {fileID: 1711813855953005283}
+  - component: {fileID: 3469287836794707498}
   m_Layer: 0
   m_Name: retrotv
   m_TagString: Untagged
@@ -4018,6 +4022,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148869630774}
   m_Mesh: {fileID: 7240493346068470835, guid: 1d1a1c99929088a47baa2a088a40e553, type: 3}
+--- !u!114 &3469287836794707498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148869630774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cd1b289827e85498757b9921a37651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpdating: 1
+  meshRenderer: {fileID: 1711813855953005283}
+  imageBrightness: 2
+  scrollingStaticStrength: 0.001
+  staticStrength: 0.001
+  screenTex: {fileID: 0}
 --- !u!4 &3774608950982186090
 Transform:
   m_ObjectHideFlags: 0

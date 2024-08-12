@@ -4,36 +4,51 @@ using UnityEngine;
 
 public class TVController : MonoBehaviour
 {
-    [SerializeField] private Material tvMat;
-    [SerializeField] private RenderTexture gameRT;
     [SerializeField] private int gameChannel;
-    [SerializeField] private Clickable_SwitchView tvView;
-    [SerializeField] private Transform overlayRoot;
+    [SerializeField] private RenderTexture gameRT;
+    [SerializeField] private PerRendererRetro perRendererRetro;
     [SerializeField] private Animation tvAnimation;
+    [SerializeField] private Transform overlayRoot;
+[Header("Interaction")]
+    [SerializeField] private Clickable_SwitchView tvView;
+    [SerializeField] private Clickable_TVChannel channelInteraction;
+    [SerializeField] private Clickable_TVPower powerInteraction;
 [Header("Button Trans")]
     [SerializeField] private Transform knobSwitch;
     [SerializeField] private Transform powerSwitch;
-    private const int TOTAL_CHANNEL = 12;
-    private bool isOn = false;
+
     private int currentChannel = 0;
+    private bool isOn = false;
     private GameObject stickingItem;
 
+    private const int TOTAL_CHANNEL = 12;
+
     void OnEnable(){
-        EventHandler.E_OnPlayerOverview += handlePlayerOverview;
+        EventHandler.E_OnPlayerOverview += ResetInteraction;
     }
     void OnDisable(){
-        EventHandler.E_OnPlayerOverview -= handlePlayerOverview;
+        EventHandler.E_OnPlayerOverview -= ResetInteraction;
     }
     void Start(){
         RefreshScreen();
-        tvMat.SetFloat("_ImageBrightness", isOn?2:0);
+        ResetInteraction();
+        perRendererRetro.imageBrightness = isOn?2:0;
+        perRendererRetro.Refresh();
     }
-    void handlePlayerOverview(){
+    void ResetInteraction(){
         tvView.EnableHitbox();
+        channelInteraction.DisableHitbox();
+        powerInteraction.DisableHitbox();
+    }
+    public void EnableTVInteraction(){
+        tvView.DisableHitbox();
+        channelInteraction.EnableHitbox();
+        powerInteraction.EnableHitbox();        
     }
     public void ChangeChannle(){
         currentChannel += 1;
         currentChannel %= TOTAL_CHANNEL;
+        knobSwitch.localRotation = Quaternion.Euler(0,-currentChannel*(360/TOTAL_CHANNEL),0);
         
         if(!isOn) return;
         RefreshScreen();
@@ -44,13 +59,15 @@ public class TVController : MonoBehaviour
         isOn = !isOn;
         powerSwitch.localRotation = Quaternion.Euler(0,0,isOn?-8:8);
         if(isOn) RefreshScreen();
-        tvMat.SetFloat("_ImageBrightness", isOn?2:0);
+
+        perRendererRetro.imageBrightness = isOn?2:0;
+        perRendererRetro.Refresh();
     }
     void RefreshScreen(){
-        knobSwitch.localRotation = Quaternion.Euler(0,-currentChannel*30,0);
-        tvMat.SetFloat("_ScrollingStaticStrength", currentChannel==gameChannel?0.001f:0.5f);
-        tvMat.SetFloat("_StaticStrength", currentChannel==gameChannel?0.001f:0.1f);
-        tvMat.SetTexture("_ScreenTexture",currentChannel==gameChannel?gameRT:null);
+        perRendererRetro.scrollingStaticStrength = currentChannel==gameChannel?0.001f:0.5f;
+        perRendererRetro.staticStrength = currentChannel==gameChannel?0.001f:0.1f;
+        perRendererRetro.screenTex = currentChannel==gameChannel?gameRT:null;
+        perRendererRetro.Refresh();
     }
     public void StickOverlay(GameObject stickOverlay){
         if(stickingItem!=null) Destroy(stickingItem);
