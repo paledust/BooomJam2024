@@ -7,9 +7,11 @@ using UnityEngine.Rendering.Universal;
 public class Retro_RenderPass : ScriptableRenderPass
 {
     private Material retroMat;
-
     private RTHandle retroTexHandle;
     private RenderTextureDescriptor retroTexDescriptor;
+
+    private HashSet<Renderer> retroRenderers;
+
     public Retro_RenderPass(Material mat){
         retroMat = mat;
         retroTexDescriptor = new RenderTextureDescriptor(Screen.width,
@@ -24,14 +26,21 @@ public class Retro_RenderPass : ScriptableRenderPass
     }
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
+        retroRenderers = Retro_RenderFeature.retroRenderers;
+        if(retroRenderers==null || retroRenderers.Count == 0) return;
+
         CommandBuffer cmd = CommandBufferPool.Get("Retro screen");
 
-        RTHandle cameraTargetHandle = renderingData.cameraData.renderer.cameraColorTargetHandle;
+        cmd.SetRenderTarget(retroTexHandle);
+        cmd.ClearRenderTarget(true, true, Color.black);
 
+        foreach(var retro in retroRenderers){
+            cmd.DrawRenderer(retro, retroMat, 1);
+        }
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);
     }
     public void Dispose(){
-
+        if(retroTexHandle!=null) retroTexHandle.Release();
     }
 }

@@ -3697,6 +3697,7 @@ GameObject:
   - component: {fileID: 3469287836794707497}
   - component: {fileID: 1711813855953005283}
   - component: {fileID: 3469287836794707498}
+  - component: {fileID: 3469287836794707499}
   m_Layer: 0
   m_Name: retrotv
   m_TagString: Untagged
@@ -4040,6 +4041,19 @@ MonoBehaviour:
   scrollingStaticStrength: 0.001
   staticStrength: 0.001
   screenTex: {fileID: 0}
+--- !u!114 &3469287836794707499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148869630774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae492e06800d711458b29c2d64df0e84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  retroRenderer: {fileID: 1711813855953005283}
 --- !u!4 &3774608950982186090
 Transform:
   m_ObjectHideFlags: 0
