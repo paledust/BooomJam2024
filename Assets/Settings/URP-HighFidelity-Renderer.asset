@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3258923983672328161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b10595c5cfd907743b54fa6f68683c41, type: 3}
+  m_Name: RetroRenderFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  Mat_retroScreen: {fileID: -876546973899608171, guid: e9083d9ed9a4bee408ee42ead965be77,
+    type: 3}
 --- !u!114 &-2969908391924373461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +101,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
   - {fileID: -2969908391924373461}
-  m_RendererFeatureMap: adc0de57c6d2eee52b68e5830dc4c8d6
+  - {fileID: -3258923983672328161}
+  m_RendererFeatureMap: adc0de57c6d2eee52b68e5830dc4c8d61fc03543e7f9c5d2
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -124,7 +140,7 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
+  m_RenderingMode: 2
   m_DepthPrimingMode: 1
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0

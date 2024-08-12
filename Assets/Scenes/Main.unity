@@ -200,12 +200,12 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 0
   m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
+  m_VolumeFrameworkUpdateModeOption: 1
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -266,7 +266,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 095056174d1ea3c43949e8f60303d7cd, type: 2}
   m_TargetDisplay: 0
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 42975904}
   - component: {fileID: 42975906}
   - component: {fileID: 42975905}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1862,7 +1862,7 @@ GameObject:
   - component: {fileID: 1188726119}
   - component: {fileID: 1188726118}
   - component: {fileID: 1188726120}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2038,7 +2038,7 @@ GameObject:
   - component: {fileID: 1349084845}
   - component: {fileID: 1349084847}
   - component: {fileID: 1349084846}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3207,7 +3207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2088116407}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: '#Elements'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3286,11 +3286,11 @@ MonoBehaviour:
   gameChannel: 5
   gameRT: {fileID: 8400000, guid: 095056174d1ea3c43949e8f60303d7cd, type: 2}
   perRendererRetro: {fileID: 3469287836794707498}
+  tvAnimation: {fileID: 2091059417}
+  overlayRoot: {fileID: 1175594658}
   tvView: {fileID: 2130827145}
   channelInteraction: {fileID: 1923346949}
   powerInteraction: {fileID: 1965194197}
-  overlayRoot: {fileID: 1175594658}
-  tvAnimation: {fileID: 2091059417}
   knobSwitch: {fileID: 1642108515}
   powerSwitch: {fileID: 1089330895248388045}
 --- !u!111 &2091059417
