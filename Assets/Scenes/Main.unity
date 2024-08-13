@@ -3858,6 +3858,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerControl
       objectReference: {fileID: 0}
+    - target: {fileID: 373154963619764986, guid: eac41d8857e94804e8385c9b551a4815,
+        type: 3}
+      propertyPath: m_AllowMSAA
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6531604935923600548, guid: eac41d8857e94804e8385c9b551a4815,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4517,6 +4522,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 7737494605965544538, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8386462012655547398, guid: a3a2e2dfae3e1dd4e893fc7659ae31fe,
         type: 3}

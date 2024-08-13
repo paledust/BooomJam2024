@@ -15,12 +15,14 @@ public class Retro_RenderPass : ScriptableRenderPass
     public Retro_RenderPass(Material mat){
         retroMat = mat;
         retroTexDescriptor = new RenderTextureDescriptor(Screen.width,
-            Screen.height, RenderTextureFormat.Default, 0);
+            Screen.height, RenderTextureFormat.DefaultHDR, 0);
     }
     public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor)
     {
         retroTexDescriptor.height = cameraTextureDescriptor.height;
         retroTexDescriptor.width = cameraTextureDescriptor.width;
+
+        cmd.SetGlobalTexture("Retro_CMD",retroTexHandle);
 
         RenderingUtils.ReAllocateIfNeeded(ref retroTexHandle, retroTexDescriptor);
     }
@@ -32,11 +34,12 @@ public class Retro_RenderPass : ScriptableRenderPass
         CommandBuffer cmd = CommandBufferPool.Get("Retro screen");
 
         cmd.SetRenderTarget(retroTexHandle);
-        cmd.ClearRenderTarget(true, true, Color.black);
+        cmd.ClearRenderTarget(true, true, Color.clear);
 
         foreach(var retro in retroRenderers){
             cmd.DrawRenderer(retro, retroMat, 1);
         }
+        cmd.SetGlobalTexture("Retro_CMD",retroTexHandle);
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);
     }

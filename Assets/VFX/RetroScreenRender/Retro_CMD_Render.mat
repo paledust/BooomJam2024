@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2949068411891957673
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 9
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Overlay 1
-  m_Shader: {fileID: 4800000, guid: de31c1a4d3537b645994e529772cd1fa, type: 3}
+  m_Name: Retro_CMD_Render
+  m_Shader: {fileID: 4800000, guid: 2bf27d277d499684ca534389fbae38cc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,11 +24,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: ab22faeff4358674da6f1e5ca59de49c, type: 3}
+        m_Texture: {fileID: 2800000, guid: b15751afb0c3a914fb43d14f3608f4fd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: fcc375f6ab36a594481aba5192139e25, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2560411af82afd745bf7d1a092bdc967, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -61,31 +48,35 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ab22faeff4358674da6f1e5ca59de49c, type: 3}
+        m_Texture: {fileID: 2800000, guid: b15751afb0c3a914fb43d14f3608f4fd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex_1:
+        m_Texture: {fileID: 2800000, guid: b15751afb0c3a914fb43d14f3608f4fd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9935bc581b4c6aa4a85662f28c67791d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 2800000, guid: fcc375f6ab36a594481aba5192139e25, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2560411af82afd745bf7d1a092bdc967, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7cc9ef35297351346b16e8fc7b91acb0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
+    - _ScreenTexture:
+        m_Texture: {fileID: 8400000, guid: 095056174d1ea3c43949e8f60303d7cd, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _TranslucentTex:
-        m_Texture: {fileID: 2800000, guid: bf9f64d77515769409a38a36b3c4ae86, type: 3}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -102,6 +93,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - CRT_WARP: 0
+    - DISTORT: 1
+    - RGB_STRIPES: 0
+    - SCROLL_STATIC: 1
+    - STATIC: 1
+    - Vector1_1BFF6B46: 256
+    - Vector1_5660967D: 0
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
@@ -115,32 +113,65 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Distortion: 0.2
-    - _DstBlend: 10
-    - _DstBlendAlpha: 10
+    - _DistortionStrength: 0.1
+    - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _GlitchAngle: 0
+    - _GlitchFreq: 3
+    - _GlitchPixelsX: 8
+    - _GlitchPixelsY: 8
+    - _GlitchPulseWidth: 0.2
+    - _GlitchSpeed: 4
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _ImageBrightness: 1.93
     - _Metallic: 0
-    - _NormalScale: 0.1
+    - _Mode: 0
+    - _NormalStrength: 1
     - _OcclusionStrength: 1
-    - _Parallax: 0.005
+    - _OutputBrightness: 2
+    - _Parallax: 0.02
+    - _PixelsX: 256
+    - _PixelsY: 256
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _ScanlineHeight: 5
+    - _ScanlineStrength: 0.5
+    - _ScrollingStaticStrength: 0.001
+    - _Scrolling_Static_Strength: 0.5
+    - _Scrolling_Strength: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _Surface: 1
+    - _StaticStrength: 0.001
+    - _Surface: 0
+    - _UVSec: 0
     - _WorkflowMode: 1
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.101999946, b: 0.12852734, a: 0.6}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CRTWarpStrength: {r: 1, g: 1, b: 0, a: 0}
+    - _Color: {r: 0.91132075, g: 0.9879119, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ScreenColor: {r: 1.7976471, g: 2.6491642, b: 2.9960785, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &1456916791308985284
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9

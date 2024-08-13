@@ -32,7 +32,7 @@ public class TVController : MonoBehaviour
     void Start(){
         RefreshScreen();
         ResetInteraction();
-        perRendererRetro.imageBrightness = isOn?2:0;
+        perRendererRetro.imageBrightness = isOn?6:0;
         perRendererRetro.Refresh();
     }
     void ResetInteraction(){

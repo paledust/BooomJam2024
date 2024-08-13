@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RetroRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  Mat_retroScreen: {fileID: -876546973899608171, guid: e9083d9ed9a4bee408ee42ead965be77,
-    type: 3}
+  Mat_retroScreen: {fileID: 2100000, guid: 162e355eeb0211e4e9ae0ac1da166b15, type: 2}
+  outputBrightness: 5
 --- !u!114 &-2969908391924373461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 2
+  m_RenderingMode: 0
   m_DepthPrimingMode: 1
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
