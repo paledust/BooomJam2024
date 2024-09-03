@@ -10,13 +10,18 @@ public class TVGameControl : MonoBehaviour
     [SerializeField] private InputAction restAction;
 [Header("Player Move")]
     [SerializeField] private float maxSpeed = 5;
+    [SerializeField] private float inputLerp = 5;
+    [SerializeField] private float stopLerp = 20;
     [SerializeField] private Rigidbody2D player_rigid;
 [Header("NPC")]
     [SerializeField] private Rigidbody2D npc_rigid;
 [Header("Ball")]
     [SerializeField] private Rigidbody2D ball_rigid;
     private Vector2 moveSpeed = Vector2.zero;
+    private float lerpSpeed;
     void OnEnable(){
+        lerpSpeed = stopLerp;
+
         moveAction.performed += Move;
         moveAction.canceled += Move;
         moveAction.Enable();
@@ -34,7 +39,7 @@ public class TVGameControl : MonoBehaviour
     }
     void FixedUpdate()
     {
-        player_rigid.velocity = Vector2.Lerp(player_rigid.velocity, moveSpeed, Time.fixedDeltaTime*5);
+        player_rigid.velocity = Vector2.Lerp(player_rigid.velocity, moveSpeed, Time.fixedDeltaTime*lerpSpeed);
     }
     void Restart(InputAction.CallbackContext callback){
         player_rigid.transform.localPosition = Vector2.left*0.55f;
@@ -52,5 +57,9 @@ public class TVGameControl : MonoBehaviour
     void Move(InputAction.CallbackContext callback){
         var input = callback.ReadValue<Vector2>();
         moveSpeed = input*maxSpeed;
+        if(input.sqrMagnitude == 0)
+            lerpSpeed = stopLerp;
+        else
+            lerpSpeed = inputLerp;
     }
 }

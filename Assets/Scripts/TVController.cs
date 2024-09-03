@@ -75,7 +75,8 @@ public class TVController : MonoBehaviour
         stickingItem = Instantiate(stickOverlay);
         stickingItem.transform.parent = overlayRoot;
         stickingItem.transform.localPosition = Vector3.zero;
-        stickingItem.transform.localRotation = Quaternion.Euler(Random.Range(85,95),90,90);
+        stickingItem.transform.localRotation = Quaternion.Euler(180,0,Random.Range(-2.5f,2.5f));
+        stickingItem.transform.localScale = Vector3.one * 0.47f;
         stickingItem.layer = Service.DefaultLayer;
     }
 }
